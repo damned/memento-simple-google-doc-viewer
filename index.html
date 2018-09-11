@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Simple Doc View</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/style.css">
+  </head>  
+  <body>
+    <header>
+      Today is
+    </header>
+    <div class="app">
+      <button class="app__button authorize-button">Authorize</button>
+      <form>
+        <input id="file-id" type="hidden" value="13X75Ao72FVuTB2rcrGjZIeKcwiSXlJkDicEGlXN-eZs">
+      </form>
+
+      <div id="content"></div>
+    </div>
+    <script src="script.js"></script>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script>
+      window.docViewer.handleClientLoad();
+      var dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      document.querySelector("header").appendChild(document.createTextNode(new Date().toLocaleDateString('en-GB', dateOptions)));
+    </script>
+  </body>
+</html>
