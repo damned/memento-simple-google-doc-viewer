@@ -21,10 +21,29 @@
     </div>
     <script src="script.js"></script>
     <script src="https://apis.google.com/js/api.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-firestore.js"></script>
     <script>
       window.docViewer.handleClientLoad();
       var dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
       document.querySelector("header").appendChild(document.createTextNode(new Date().toLocaleDateString('en-GB', dateOptions)));
+      function getUsedMinutes() {
+        return window.localStorage.getItem('usedMinutes');
+      }
+      function setUsedMinutes(mins) {
+        window.localStorage.setItem('usedMinutes', mins)
+      }
+      if (getUsedMinutes() === null) {
+        setUsedMinutes('0')
+      }
+      var usedLastMinute = false;
+      window.addEventListener('scroll', function(){ usedLastMinute = true }, true);
+      setInterval(function() {
+        if (usedLastMinute) {
+          setUsedMinutes((parseInt(getUsedMinutes()) + 1).toString())
+        }
+        usedLastMinute = false;
+      }, 60 * 1000)
     </script>
   </body>
 </html>

@@ -3,7 +3,7 @@ function appendText(text) {
   var para = document.createElement("P");
   var textContent = document.createTextNode(text);
   para.appendChild(textContent)
-  content.appendChild(para  );
+  content.appendChild(para);
 };
 
 function appendImage(imageUrl) {
@@ -22,14 +22,12 @@ class DocViewer {
 
     //DOM Elements
     this.authorizeButton = document.querySelector('.authorize-button');
-    this.fileId = document.querySelector('#file-id').value;
+    this.googleDocDriveFileId = document.querySelector('#file-id').value;
   };
 
-  /**
-   *  On load, called to load the auth2 library and API client library.
-   */
   handleClientLoad() {
-    gapi.load('client:auth2', () => gapi.client.load('drive', 'v3', this.initClient.bind(this)));
+    gapi.load('client:auth2', 
+              () => gapi.client.load('drive', 'v3', this.initClient.bind(this)));
   };
 
   /**
@@ -49,7 +47,6 @@ class DocViewer {
     });
   };
 
-  //Sets up click listeners.
   setSignInListeners() {
     document.addEventListener('click', evt => {
       if (evt.target.className === this.authorizeButton.className)
@@ -59,38 +56,40 @@ class DocViewer {
 
   updateSigninStatus(isSignedIn) {
     this.authorizeButton.style.display = isSignedIn ? 'none' : 'block';
-    // this.signoutButton.style.display = isSignedIn ? 'block' : 'none';
-    // this.queryForm.style.display = isSignedIn ? 'block' : 'none';
 
     if (!isSignedIn) {
       return;
     }
-    this.renderFileContent();
+    this.displayGoogleDoc();
   };
 
-  renderFileContent() {
+  displayGoogleDoc() {
     gapi.client.drive.files.export({
-      'fileId': this.fileId,
+      'fileId': this.googleDocDriveFileId,
       'mimeType': 'text/html'
-    }).then(function(response) {
-      let htmlContent = response.body;
-      let parser = new DOMParser();
-      let doc = parser.parseFromString(htmlContent, "text/html");
-
-      doc.querySelectorAll('img, p').forEach((el) => {
-        console.log(el.tagName)
-        if (el.tagName.toLowerCase() == 'img') {
-          appendImage(el.attributes.src.value)
-        }
-        else {
-          let text = el.textContent.trim()
-          if (text !== '') {
-            appendText(text)
-          }
-        }
-      })
+    }).then((response) => {
+      let docAsHtml = response.body;
+      this.displaySimplifiedHtml(docAsHtml);
     });
   };
   
+  displaySimplifiedHtml(html) {
+    let parser = new DOMParser();
+    let doc = parser.parseFromString(html, "text/html");
+
+    doc.querySelectorAll('img, p').forEach((el) => {
+      console.log(el.tagName)
+      if (el.tagName.toLowerCase() == 'img') {
+        appendImage(el.attributes.src.value)
+      }
+      else {
+        let text = el.textContent.trim()
+        if (text !== '') {
+          appendText(text)
+        }
+      }
+    })
+  };
+
 };
 window.docViewer = new DocViewer();

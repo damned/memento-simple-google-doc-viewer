@@ -5,7 +5,7 @@ header {
   height: 30px;
   background-color: lightblue;
   width: 100%;
-  font-size: large;
+  font-size: x-large;
 }
 .app {
   width: 100%;
@@ -13,21 +13,12 @@ header {
   margin: 50px auto 0;
 }
 form {
-  margin: 2rem 0;
-  padding: 2rem;
-  border: none;
   display: none;
 }
 .app__button {
-  border-radius: .315rem;
   background-color: #09A960;
-  padding: .5rem;
-  width: 10rem;
-  margin: 0 auto;
   color: #fff;
   cursor: pointer;
-  box-shadow: 0 0.1rem 0.5rem rgba(0,0,0,0.2);
-  border: 1px solid #085130;
   height: 2rem;
   display: none;
 }
