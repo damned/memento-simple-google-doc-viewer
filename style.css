@@ -1,16 +1,17 @@
 header {
   position: fixed;
   top: 0px;
-  padding: 5px 10px 5px 10px;
-  height: 30px;
+  padding: 0.3em 10px 5px 10px;
+  height: 1.6em;
   background-color: lightblue;
   width: 100%;
   font-size: x-large;
+  z-index: 1;
 }
 .app {
   width: 100%;
   max-width: 40rem;
-  margin: 50px auto 0;
+  margin: 80px auto 0;
 }
 form {
   display: none;
@@ -30,4 +31,20 @@ img {
 }
 p {
   font-size: x-large;
+}
+.bubble-container {
+  position: relative;
+}
+.bubble {
+  position: absolute;
+  top: 20px;
+  right: 80px;
+  font-size: xx-large;
+  width: 100px;
+  background-color: blue;
+  color: yellow;
+  border-radius: 53px;
+  text-align: center;
+  border: black 5px solid;
+  font-family: graphic;
 }
