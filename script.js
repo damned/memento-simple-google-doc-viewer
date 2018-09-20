@@ -4,13 +4,27 @@ function appendText(text) {
   var textContent = document.createTextNode(text);
   para.appendChild(textContent)
   content.appendChild(para);
+  return {
+    addBubble: (msg) => { console.log(`Cannot add bubble "${msg}" to text element`) }
+  };
 };
 
 function appendImage(imageUrl) {
   var content = document.getElementById('content');
+  var container = document.createElement("DIV");
   var img = document.createElement("IMG");
+  container.appendChild(img);
   img.setAttribute('src', imageUrl);
-  content.appendChild(img);
+  content.appendChild(container);
+  return {
+    addBubble: (msg) => {
+      let bubble = document.createElement('DIV')
+      container.setAttribute('class', 'bubble-container');
+      bubble.appendChild( document.createTextNode(msg));
+      bubble.setAttribute('class', 'bubble');
+      container.appendChild(bubble);
+    }
+  };
 };
 
 /* global gapi */
@@ -76,16 +90,21 @@ class DocViewer {
   displaySimplifiedHtml(html) {
     let parser = new DOMParser();
     let doc = parser.parseFromString(html, "text/html");
-
+    let lastContent = { addBubble: () => { console.log('Bubble defined but no last content')}};
+    
     doc.querySelectorAll('img, p').forEach((el) => {
       console.log(el.tagName)
       if (el.tagName.toLowerCase() == 'img') {
-        appendImage(el.attributes.src.value)
+        lastContent = appendImage(el.attributes.src.value)
       }
       else {
         let text = el.textContent.trim()
-        if (text !== '') {
-          appendText(text)
+        if (text[0] == '(') {
+          let inner = text.replace(/^\(/, '').replace(/\)$/, '')
+          lastContent.addBubble(inner)
+        }
+        else if (text !== '') {
+          lastContent = appendText(text)
         }
       }
     })

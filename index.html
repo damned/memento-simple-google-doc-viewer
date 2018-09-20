@@ -9,6 +9,7 @@
   </head>  
   <body>
     <header>
+      <div class="bubble">Now: 2018</div>
       Today is
     </header>
     <div class="app">
@@ -21,8 +22,6 @@
     </div>
     <script src="script.js"></script>
     <script src="https://apis.google.com/js/api.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-firestore.js"></script>
     <script>
       window.docViewer.handleClientLoad();
       var dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -45,5 +44,16 @@
         usedLastMinute = false;
       }, 60 * 1000)
     </script>
+    <!-- Hotjar Tracking Code for https://memento-simple-google-doc-viewer-dev.glitch.me -->
+<script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:1022229,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
   </body>
 </html>
